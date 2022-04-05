@@ -7,7 +7,7 @@ import time
 from pymeasure.instruments.keithley import Keithley2400
 from datetime import datetime
 
-date = int(datetime.now().strftime("%Y%m%d"))-20000000 # 日付。2020年9月10日なら「200910」
+date = int(datetime.now().strftime("%Y%m%d"))-20000000 # 日付
 keithley = Keithley2400("GPIB::24") # 使用する機器に該当するGPIBアドレスを指定。
 book = openpyxl.Workbook() # エクセルファイルを作成
 sheet = book.worksheets[0] # エクセルファイル中の使用するブックを指定。
@@ -73,7 +73,6 @@ def duplicate_rename(file_path):
         name, ext = os.path.splitext(file_path)
         i = 1
         while True:
-            # 数値を3桁などにしたい場合は({:0=3})とする
             new_name = "{} ({:0=2}){}".format(name, i, ext)
             if not os.path.exists(new_name):
                 return new_name
@@ -82,7 +81,7 @@ def duplicate_rename(file_path):
         return file_path
     
 ### conducting functions ###
-if __name__ == "__main__": # おまじないみたいなもの。気になるならググって。
+if __name__ == "__main__":
     # ファイル情報
     path = "C:\\Users\\（各自のユーザー名）\\Desktop\\" #ファイル保存場所を好きに設定。
     #とりあえずデスクトップに保存することにしてみた。
