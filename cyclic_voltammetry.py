@@ -1,3 +1,5 @@
+#Based on https://qiita.com/matoarea/items/af802ffe430d5ce364fd
+
 import openpyxl
 from openpyxl import Workbook
 import time
@@ -65,6 +67,19 @@ def voltage_apply(voltage):
         sheet.cell(row = 2+i, column = 3).value = z[i]
     print('voltage_apply_done.')
 
+def duplicate_rename(file_path):
+    if os.path.exists(file_path):
+        name, ext = os.path.splitext(file_path)
+        i = 1
+        while True:
+            # 数値を3桁などにしたい場合は({:0=3})とする
+            new_name = "{} ({:0=2}){}".format(name, i, ext)
+            if not os.path.exists(new_name):
+                return new_name
+            i += 1
+    else:
+        return file_path
+    
 ### conducting functions ###
 if __name__ == "__main__": # おまじないみたいなもの。気になるならググって。
     # ファイル情報
@@ -84,6 +99,7 @@ if __name__ == "__main__": # おまじないみたいなもの。気になるな
 
     # 保存ファイル名を生成
     filename = "{0}_{1}_{2}-{3}V_{4}Vs-1.xlsx".format(date, sample_name, low_V,high_V, scan_rate) 
+    filename = duplicate_rename(filename)
 
     # 測定の実行
     initial_settings()
